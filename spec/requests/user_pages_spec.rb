@@ -11,7 +11,7 @@ describe "User pages" do
 			visit users_path
 		end
 
-		it { should have_title('All Users') }
+		it { should have_title('All users') }
 
 		it "should list each user" do
 			User.all.each do |user|

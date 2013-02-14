@@ -53,11 +53,6 @@ describe "Authentication" do
 
 			describe "in the Users controller" do
 
-				describe "visiting the user index" do
-					before { visit users_path }
-					it { should have_selector('title', text: 'Sign In') }
-				end
-
 				describe "visiting the edit page" do
 					before { visit edit_user_path(user) }
 					it { should have_selector('title', text: 'Sign In') }
@@ -66,6 +61,11 @@ describe "Authentication" do
 				describe "submitting to the update action" do
 					before { put user_path(user) }
 					specify { response.should redirect_to(signin_path) }
+				end
+
+				describe "visiting the user index" do
+					before { visit users_path }
+					it { should have_selector('title', text: 'Sign In') }
 				end
 			end
 		end

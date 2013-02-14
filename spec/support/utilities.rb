@@ -41,6 +41,7 @@ end
 RSpec::Matchers.define :have_signed_in do |user|
 	match do |page|
 		page.should have_selector('title', text: user.name)
+		page.should have_link('Users', href: users_path)
 		page.should have_link('Profile', href: user_path(user))
 		page.should have_link('Settings', href: edit_user_path(user))
 		page.should have_link('Sign Out', href: signout_path)
