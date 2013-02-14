@@ -49,5 +49,5 @@ describe "Authentication" do
 				end
 			end
 		end
-	end
+		ends
 end
