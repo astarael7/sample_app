@@ -1,7 +1,8 @@
 include ApplicationHelper
 
 def sign_in(user)
-	fill_in "Email",	with: user.email.upcase
+	visit signin_path
+	fill_in "Email",	with: user.email
 	fill_in "Password",	with: user.password
 	click_button "Sign In"
 	# Sign in when not using Capybara as well.
@@ -37,7 +38,7 @@ RSpec::Matchers.define :have_loaded_user_page do |user|
 	end
 end
 
-RSpec::Matchers.define :have_signed_user_in do |user|
+RSpec::Matchers.define :have_signed_in do |user|
 	match do |page|
 		page.should have_selector('title', text: user.name)
 		page.should have_link('Profile', href: user_path(user))
