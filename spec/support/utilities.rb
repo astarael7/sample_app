@@ -43,6 +43,5 @@ RSpec::Matchers.define :have_signed_user_in do |user|
 		page.should have_link('Profile', href: user_path(user))
 		page.should have_link('Settings', href: edit_user_path(user))
 		page.should have_link('Sign Out', href: signout_path)
-		page.should_not have_link('Sign In', href: signin_path)
 	end
 end

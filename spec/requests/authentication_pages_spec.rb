@@ -22,6 +22,7 @@ describe "Authentication" do
 			let (:user) { FactoryGirl.create(:user) }
 			before { sign_in(user) }
 			it { should have_signed_user_in(user) }
+			it { should_not have_link('Sign In', href: signin_path) }
 
 			describe "followed by signout" do
 				before { click_link "Sign Out" }
