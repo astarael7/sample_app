@@ -21,6 +21,10 @@ class UsersController < ApplicationController
   	end
   end
 
+  def index
+    @user = User.all
+  end
+
   def edit
   end
 
