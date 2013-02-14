@@ -1,9 +1,11 @@
 include ApplicationHelper
 
-def valid_signin(user)
+def sign_in(user)
 	fill_in "Email",	with: user.email.upcase
 	fill_in "Password",	with: user.password
 	click_button "Sign In"
+	# Sign in when not using Capybara as well.
+	cookies[:remember_token] = user.remember_token
 end
 
 def valid_signup
@@ -39,6 +41,8 @@ RSpec::Matchers.define :have_signed_user_in do |user|
 	match do |page|
 		page.should have_selector('title', text: user.name)
 		page.should have_link('Profile', href: user_path(user))
+		page.should have_link('Settings', href: edit_user_path(user))
 		page.should have_link('Sign Out', href: signout_path)
+		page.should_not have_link('Sign In', href: signin_path)
 	end
 end
