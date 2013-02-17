@@ -27,7 +27,8 @@ describe "User pages" do
 			end
 		end
 
-		describe "delete links" do
+		describe "edit and delete links" do
+			it { should_not have_link('Edit') }
 			it { should_not have_link('Delete') }
 
 			describe "as an admin user" do
@@ -37,7 +38,9 @@ describe "User pages" do
 					visit users_path
 				end
 
+				it { should have_link('Edit', href: edit_user_path(User.first)) }
 				it { should have_link('Delete', href: user_path(User.first)) }
+
 				it "should be able to delete another user" do
 					expect { click_link('Delete') }.to change(User, :count).by(-1)
 				end
