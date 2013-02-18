@@ -37,10 +37,8 @@ describe "User pages" do
 					sign_in admin
 					visit users_path
 				end
-
-				it { should have_link('Edit', href: edit_user_path(User.first)) }
+				
 				it { should have_link('Delete', href: user_path(User.first)) }
-
 				it "should be able to delete another user" do
 					expect { click_link('Delete') }.to change(User, :count).by(-1)
 				end
@@ -51,18 +49,27 @@ describe "User pages" do
 
 	describe "profile page" do
 		let(:user) { FactoryGirl.create(:user) }
-		before { visit user_path(user) }
+		before { visit user_path user }
 
 		it { should have_title(user.name) }
 	end
 
-	describe "signup page" do
-		before { visit signup_path }
-		it { should have_title('Sign up') }
-	end
+	describe "visit signup page" do
 
-	describe "signup page" do
+		describe "as a signed-in user" do
+			let(:user) { FactoryGirl.create(:user) }
+			before do
+				sign_in user
+				visit signup_path
+			end
+
+			it { should_not have_title('Sign up') }
+		end
+
+
 		before { visit signup_path }
+
+		it { should have_title('Sign up') }
 
 		let(:submit) { "Create my account" }
 
@@ -104,7 +111,7 @@ describe "User pages" do
 		describe "page" do
 			it { should have_selector('h1', text: 'Update your profile') }
 			it { should have_selector('title', text: 'Edit user') }
-			it { should have_link('change', href: 'http://gravatar.com/emails') }
+			it { should have_link('Change', href: 'http://gravatar.com/emails') }
 		end
 
 		describe "with invalid information" do
