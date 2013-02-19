@@ -140,5 +140,14 @@ describe User do
     it "should have the right posts in the right order" do
       @user.posts.should == [newer_post, older_post]
     end
+
+    it "should destroy associated posts" do
+      posts = @user.posts.dup
+      @user.destroy
+      posts.should_not be_empty
+      posts.each do |post|
+        Post.find_by_id(post.id).should be_nil
+      end
+    end
   end
 end
