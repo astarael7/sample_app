@@ -39,4 +39,14 @@ describe Post do
     before { @post.user_id = nil }
     it { should_not be_valid }
   end
+
+  describe "when title is not present" do
+    before { @post.title = '' }
+    it { should_not be_valid }
+  end
+
+  describe "when content is not present" do
+    before { @post.content = ''}
+    it { should_not be_valid }
+  end
 end
