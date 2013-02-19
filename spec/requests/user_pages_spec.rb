@@ -57,8 +57,8 @@ describe "User pages" do
 		it { should have_title(user.name) }
 
 		describe "posts" do
-			it { should have_content(p1.title) }
-			it { should have_content(p2.title) }
+			it { should have_link("#{p1.title}") }
+			it { should have_link("#{p2.title}") }
 			it { should have_content(user.posts.count) }
 		end
 	end
