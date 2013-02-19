@@ -12,7 +12,7 @@ describe "Posts" do
 		visit user_post_path(user, p1)
 	end
 	
-	it { should have_title(p1.title) }
+	it { should have_content(p1.title) }
 	it { should have_content(p1.content) }
-	it { should have_content(p1.user.name) }
+	it { should have_link(p1.user.name) }
 end

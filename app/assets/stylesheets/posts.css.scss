@@ -1,3 +1,12 @@
-// Place all the styles related to the Posts controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.post-title {
+	font-size: 3em;
+	letter-spacing: -2px;
+	margin-bottom: 30px;
+}
+.author {
+	text-align: right;
+}
+
+.timestamp {
+	text-align: right;
+}
