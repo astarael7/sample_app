@@ -8,7 +8,7 @@ describe "Post pages" do
 	before { sign_in user }
 
 	describe "post creation" do
-		before { visit root_path }
+		before { visit new_user_post_path(user) }
 
 		describe "with invalid information" do
 			

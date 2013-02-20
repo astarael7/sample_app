@@ -2,15 +2,16 @@ class PostsController < ApplicationController
 	before_filter :signed_in_user
 	
 	def new
+		@post = current_user.posts.build if signed_in?
 	end
 
 	def create
 		@post = current_user.posts.build(params[:post])
 		if @post.save
 			flash[:success] = "Post created!"
-			redirect_to root_url
+			render 'show'
 		else
-			render 'static_pages/home'
+			render 'new'
 		end
 	end
 

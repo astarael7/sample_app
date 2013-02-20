@@ -58,6 +58,7 @@ describe "User pages" do
 		end
 
 		it { should have_title(user.name) }
+		it { should have_link('New Post') }
 
 		describe "posts" do
 			it { should have_link("#{p1.title}") }
