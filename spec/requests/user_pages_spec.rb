@@ -52,7 +52,10 @@ describe "User pages" do
 		let!(:p1) { FactoryGirl.create(:post, user: user, title: "Foo", content: "bar") }
 		let!(:p2) { FactoryGirl.create(:post, user: user, title: "Fiz", content: "bat") }
 
-		before { visit user_path user }
+		before do
+			sign_in user
+			visit user_path user
+		end
 
 		it { should have_title(user.name) }
 

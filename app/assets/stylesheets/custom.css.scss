@@ -178,6 +178,51 @@ input {
 	}
 }
 
+/* posts */
+
+.posts {
+	list-style: none;
+	margin: 10px 0 0 0;
+
+	li {
+		padding: 10px 0;
+		border-top: 1px solid #e8e8e8;
+	}
+}
+
+.title {
+	display: block;
+}
+
+.author {
+	text-align: right;
+}
+
+.timestamp {
+	color: $grayLight;
+}
+
+.gravatar {
+	float: left;
+	margin-right: 10px;
+}
+
+aside {
+	textarea {
+		height: 100px;
+		margin-bottom: 5px;
+	}
+}
+
+.post-title {
+	font-size: 3em;
+	letter-spacing: -2px;
+	margin-bottom: 30px;
+	text-align: left;
+	padding-bottom: 10px;
+	font-weight: bold;
+}
+
 /* miscellaneous */
 
 .debug_dump {

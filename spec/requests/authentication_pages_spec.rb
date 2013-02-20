@@ -35,6 +35,7 @@ describe "Authentication" do
 
 		describe "for non-signed-in users" do
 			let(:user) { FactoryGirl.create(:user) }
+			let(:post) { FactoryGirl.create(:post) }
 
 			describe "when attempting to visit a protected page" do
 				before do
@@ -61,21 +62,62 @@ describe "Authentication" do
 				end
 			end
 
+			shared_examples_for "submitting any forbidden request" do
+				it { should redirect_to(signin_path) }
+			end
+
+			shared_examples_for "visiting any forbidden page" do
+				it { should have_selector('title', text: 'Sign In') }
+			end
+
+			describe "in the Posts controller" do
+
+				describe "visiting a post" do
+					before { visit user_post_path(user, post) }
+					it_should_behave_like "visiting any forbidden page"
+				end
+
+				describe "visiting the edit post page" do
+					before { visit edit_user_post_path(user, post) }
+					it_should_behave_like "visiting any forbidden page"
+				end
+
+				describe "visiting the new post page" do
+					before { visit new_user_post_path(user) }
+					it_should_behave_like "visiting any forbidden page"
+				end
+
+				describe "submitting a PUT request" do
+					before { put user_post_path(user, post) }
+					it_should_behave_like "submitting any forbidden request"
+				end
+
+				describe "submitting a DELETE request" do
+					before { delete user_post_path(user, post) }
+					it_should_behave_like "submitting any forbidden request"
+				end
+			end
+
 			describe "in the Users controller" do
+
+				describe "visiting a user" do
+					before { visit user_path(user) }
+					it_should_behave_like "visiting any forbidden page"
+				end
 
 				describe "visiting the edit page" do
 					before { visit edit_user_path(user) }
-					it { should have_selector('title', text: 'Sign In') }
+					it_should_behave_like "visiting any forbidden page"
 				end
 
 				describe "submitting to the update action" do
 					before { put user_path(user) }
-					specify { response.should redirect_to(signin_path) }
+					it_should_behave_like "submitting any forbidden request"
 				end
 
 				describe "visiting the user index" do
 					before { visit users_path }
-					it { should have_selector('title', text: 'Sign In') }
+					it_should_behave_like "visiting any forbidden page"
 				end
 			end
 		end

@@ -1,18 +1,37 @@
 require 'spec_helper'
 
-describe "Posts" do
-
+describe "Post pages" do
+	
 	subject { page }
 
 	let(:user) { FactoryGirl.create(:user) }
-	let!(:p1) { FactoryGirl.create(:post, user: user, title: "Foo", content: "bar") }
+	before { sign_in user }
 
-	before do
-		sign_in user
-		visit user_post_path(user, p1)
+	describe "post creation" do
+		before { visit root_path }
+
+		describe "with invalid information" do
+			
+			it "should not create a post" do
+				expect { click_button "Post" }.not_to change(Post, :count)
+			end
+
+			describe "error messages" do
+				before { click_button "Post" }
+				it { should have_content('error') }
+			end
+		end
+
+		describe "with valid information" do
+			
+			before do
+				fill_in "post_title",	with: "Lorem Ipsum"
+				fill_in "post_content",	with: "Dolor sit amet"
+			end
+
+			it "should create a post" do
+				expect { click_button "Post" }.to change(Post, :count).by(1)
+			end
+		end
 	end
-	
-	it { should have_content(p1.title) }
-	it { should have_content(p1.content) }
-	it { should have_link(p1.user.name) }
 end
