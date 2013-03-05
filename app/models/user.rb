@@ -37,7 +37,6 @@ class User < ActiveRecord::Base
 
     def ensure_admin
       self.toggle!(:admin)
-      puts 'I ran'
     end
 
     def admin_found
