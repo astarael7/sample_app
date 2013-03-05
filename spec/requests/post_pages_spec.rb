@@ -5,6 +5,9 @@ describe "Post pages" do
 	subject { page }
 
 	let(:user) { FactoryGirl.create(:user) }
+	let(:other_user) { FactoryGirl.create(:user, email: "other@example.com") }
+	let(:admin) { FactoryGirl.create(:admin) }
+	let!(:post) { FactoryGirl.create(:post, user: user) }
 	before { sign_in user }
 
 	describe "post creation" do
@@ -32,6 +35,40 @@ describe "Post pages" do
 			it "should create a post" do
 				expect { click_button "Post" }.to change(Post, :count).by(1)
 			end
+		end
+	end
+
+	describe "viewing a post" do
+		before { visit user_post_path(user, post) }
+
+		it "should display the post" do
+			page.should have_content(post.title)
+			page.should have_content(post.content)
+		end
+
+		describe "as owner" do
+			it { should have_link('Edit', href: edit_user_post_path(user, post)) }
+			it { should have_link('Delete', href: user_post_path(user, post)) }
+		end
+
+		describe "as other user" do
+			before do
+				sign_in other_user
+				visit user_post_path(user, post)
+			end
+
+			it { should_not have_link('Edit', href: edit_user_post_path(user, post)) }
+			it { should_not have_link('Delete', href: user_post_path(user, post)) }
+		end
+
+		describe "as admin" do
+			before do
+			  sign_in admin
+			  visit user_post_path(user, post)
+			end
+
+			it { should have_link('Edit', href: edit_user_post_path(user, post)) }
+			it { should have_link('Delete', href: user_post_path(user, post)) }
 		end
 	end
 end

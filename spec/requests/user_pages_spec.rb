@@ -47,23 +47,46 @@ describe "User pages" do
 		end
 	end
 
-	describe "profile page" do
+	describe "visiting profile page" do
+		let(:admin) { FactoryGirl.create(:admin) }
 		let(:user) { FactoryGirl.create(:user) }
-		let!(:p1) { FactoryGirl.create(:post, user: user, title: "Foo", content: "bar") }
-		let!(:p2) { FactoryGirl.create(:post, user: user, title: "Fiz", content: "bat") }
+		let(:other_user) { FactoryGirl.create(:user, email: "other@example.com") }
+		let!(:post) { FactoryGirl.create(:post, user: user, title: "Foo", content: "bar") }
 
-		before do
-			sign_in user
-			visit user_path user
+		describe "as signed-in user" do
+			before do
+				sign_in user
+				visit user_path user
+			end
+			
+			it { should have_title(user.name) }
+			it { should have_link('New Post') }
+			it { should have_link("#{post.title}") }
+			it { should have_link('Edit', href: edit_user_post_path(user, post)) }
+			it { should have_link('Delete', href: user_post_path(user, post)) }
+			it { should have_content(user.posts.count) }
 		end
 
-		it { should have_title(user.name) }
-		it { should have_link('New Post') }
+		describe "as another user" do
+			before do
+				sign_in other_user
+				visit user_path user
+			end
 
-		describe "posts" do
-			it { should have_link("#{p1.title}") }
-			it { should have_link("#{p2.title}") }
-			it { should have_content(user.posts.count) }
+			it { should_not have_link('New Post') }
+			it { should have_link("#{post.title}") }
+			it { should_not have_link('Edit', href: edit_user_post_path(user, post)) }
+			it { should_not have_link('Delete', href: user_post_path(user, post)) }
+		end
+
+		describe "as an admin" do
+			before do
+				sign_in admin
+				visit user_path user
+			end
+
+			it { should have_link('Edit', href: edit_user_post_path(user, post)) }
+			it { should have_link('Delete', href: user_post_path(user, post)) }
 		end
 	end
 

@@ -1,6 +1,13 @@
 <% provide(:title, @post.title) %>
 <div class="post-title">
 	<%= @post.title %>
+	<a>
+		<% if current_user?(@post.user) || current_user.admin? %>
+			<%= link_to 'Edit', edit_user_post_path(@post.user, @post) %>
+			<%= link_to 'Delete', user_post_path(@post.user, @post),  method: :delete,
+											data: { confirm: "Are you sure?" } %>
+		<% end %>
+	</a>
 </div>
 <body><%= @post.content %></body>
 <div class="author">By <%= link_to @post.user.name, @post.user %></div>
