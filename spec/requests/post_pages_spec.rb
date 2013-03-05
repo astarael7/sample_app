@@ -71,4 +71,42 @@ describe "Post pages" do
 			it { should have_link('Delete', href: user_post_path(user, post)) }
 		end
 	end
+
+	describe "edit" do
+		before do
+		  sign_in user
+		  visit edit_user_post_path(user, post)
+		end
+		
+		describe "page" do
+			it { should have_selector('h1', text: "Update Your Post") }
+			it { should have_selector('title', text: "Edit Post") }
+		end
+
+		describe "with invalid changes" do
+			before do
+				fill_in "post_title", 	with: ''
+				fill_in "post_content",	with: ''
+				click_button "Save Changes"
+			end
+
+			it { should have_content('error') }
+		end
+
+		describe "with valid changes" do
+			let(:new_title) { "New Title" }
+			let(:new_content) { "New content" }
+			before do
+				fill_in "post_title", 	with: new_title
+				fill_in "post_content",	with: new_content
+				click_button "Save Changes"
+			end
+
+			it { should have_content(new_title) }
+			it { should have_content(new_content) }
+
+			specify { post.reload.title == new_title }
+			specify { post.reload.content == new_content }
+		end
+	end
 end
