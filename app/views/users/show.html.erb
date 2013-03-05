@@ -5,9 +5,9 @@
 			<h1>
 				<%= gravatar_for @user %>
 				<%= @user.name %>
-				<% if @user.admin? %>Admin<% end %>
 			</h1>
-			<%= link_to "New Post", new_user_post_path(current_user) if current_user?(@user) %>
+			<div><% if @user.admin? %>Admin<% end %></div>
+			<div><%= link_to "New Post", new_user_post_path(current_user) if current_user?(@user) %></div>
 		</section>
 	</aside>
 	<div class="span8">
@@ -20,4 +20,4 @@
 		<% end %>
 	</div>
 </div>
-<div><%= @user.name %></div><%= @user.email %>
+<%= @user.email %>
