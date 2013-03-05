@@ -145,7 +145,7 @@ describe "User pages" do
 		end
 
 		describe "page" do
-			it { should have_selector('h1', text: 'Update your profile') }
+			it { should have_selector('h1', text: 'Update Your Profile') }
 			it { should have_selector('title', text: 'Edit user') }
 			it { should have_link('Change', href: 'http://gravatar.com/emails') }
 		end

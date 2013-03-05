@@ -72,11 +72,6 @@ describe "Authentication" do
 
 			describe "in the Posts controller" do
 
-				describe "visiting a post" do
-					before { visit user_post_path(user, post) }
-					it_should_behave_like "visiting any forbidden page"
-				end
-
 				describe "visiting the edit post page" do
 					before { visit edit_user_post_path(user, post) }
 					it_should_behave_like "visiting any forbidden page"
@@ -100,11 +95,6 @@ describe "Authentication" do
 
 			describe "in the Users controller" do
 
-				describe "visiting a user" do
-					before { visit user_path(user) }
-					it_should_behave_like "visiting any forbidden page"
-				end
-
 				describe "visiting the edit page" do
 					before { visit edit_user_path(user) }
 					it_should_behave_like "visiting any forbidden page"
@@ -113,11 +103,6 @@ describe "Authentication" do
 				describe "submitting to the update action" do
 					before { put user_path(user) }
 					it_should_behave_like "submitting any forbidden request"
-				end
-
-				describe "visiting the user index" do
-					before { visit users_path }
-					it_should_behave_like "visiting any forbidden page"
 				end
 			end
 		end
