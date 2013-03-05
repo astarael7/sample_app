@@ -18,6 +18,7 @@ class UsersController < ApplicationController
 
   def create
   	@user = User.new(params[:user])
+    @user.toggle!(:admin) if @user == User.first
     if !signed_in?
       if @user.save
         sign_in @user
