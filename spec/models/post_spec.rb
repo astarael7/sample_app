@@ -23,6 +23,7 @@ describe Post do
   it { should respond_to(:user_id) }
   it { should respond_to(:title) }
   it { should respond_to(:content) }
+  it { should respond_to(:comments) }
   its(:user) { should == user }
 
   it { should be_valid }
@@ -48,5 +49,20 @@ describe Post do
   describe "when content is not present" do
     before { @post.content = ''}
     it { should_not be_valid }
+  end
+
+  describe "comment associations" do
+    
+    before { @post.save }
+    let!(:older_comment) do
+      FactoryGirl.create(:comment, post: @post, created_at: 1.day.ago)
+    end
+    let!(:newer_comment) do
+      FactoryGirl.create(:comment, post: @post, created_at: 1.hour.ago)
+    end
+
+    it "should have the right comments in the right order" do
+      @post.comments.should == [newer_comment, older_comment]
+    end
   end
 end

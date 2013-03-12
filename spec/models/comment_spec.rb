@@ -13,6 +13,9 @@ describe Comment do
 	it { should respond_to(:content) }
 	it { should respond_to(:author) }
 	it { should respond_to(:post_id) }
+	it { should respond_to(:post) }
+	its(:post) { should == post }
+	its(:author) { should == user.name }
 
 	it { should be_valid }
 
@@ -24,5 +27,19 @@ describe Comment do
 	describe "when post id is not present" do
 		before { @comment.post_id = nil }
 		it { should_not be_valid }
+	end
+
+	describe "accessible attributes" do
+		it "should not allow access to post id" do
+			expect do
+				Comment.new(post_id: post.id)
+			end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+		end
+
+		# it "should not allow access to author" do
+		# 	expect do
+		# 		Comment.new(author: user.name)
+		# 	end.to raise_error(ActiveModel::MassAssignmentSecurity::Error)
+		# end
 	end
 end
