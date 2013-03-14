@@ -37,9 +37,10 @@ class User < ActiveRecord::Base
 
     def ensure_admin
       self.role = "admin"
+      self.save
     end
 
     def admin_found
-      User.find(:all, conditions: {role: "admin"}).any? == true
+      User.find(:all, conditions: {role: 'admin'}).any? == true
     end
 end
