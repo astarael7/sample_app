@@ -9,7 +9,7 @@
 #  updated_at      :datetime         not null
 #  password_digest :string(255)
 #  remember_token  :string(255)
-#  role            :hash             default("author")
+#  role            :string(255)      default("author")
 #
 
 class User < ActiveRecord::Base
@@ -36,10 +36,10 @@ class User < ActiveRecord::Base
     end
 
     def ensure_admin
-      self.toggle!(:admin)
+      self.role = "admin"
     end
 
     def admin_found
-      User.find(:all, conditions: {admin: true}).any? == true
+      User.find(:all, conditions: {role: "admin"}).any? == true
     end
 end

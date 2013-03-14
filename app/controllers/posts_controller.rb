@@ -44,6 +44,6 @@ class PostsController < ApplicationController
 		def auth_user
 			@post = Post.find(params[:id])
 			@user = @post.user
-			redirect_to(user_path(@user)) unless current_user?(@user) || current_user.admin?
+			redirect_to(user_path(@user)) unless current_user?(@user) || current_user.role == "admin"
 		end
 end

@@ -2,7 +2,7 @@
 <div class="post-title">
 	<%= @post.title %>
 	<a>
-		<% if signed_in? && (current_user?(@post.user) || current_user.admin?) %>
+		<% if signed_in? && (current_user?(@post.user) || current_user.role == "admin") %>
 			<%= link_to 'Edit', edit_user_post_path(@post.user, @post) %>
 			<%= link_to 'Delete', user_post_path(@post.user, @post),  method: :delete,
 											data: { confirm: "Are you sure?" } %>

@@ -9,7 +9,7 @@
 #  updated_at      :datetime         not null
 #  password_digest :string(255)
 #  remember_token  :string(255)
-#  role            :hash             default("author")
+#  role            :string(255)      default("author")
 #
 
 require 'spec_helper'
@@ -29,7 +29,7 @@ describe User do
 	it { should respond_to(:password_confirmation) }
   it { should respond_to(:authenticate) }
   it { should respond_to(:remember_token) }
-  it { should respond_to(:admin) }
+  it { should respond_to(:role) }
   it { should respond_to(:posts) }
 
 	it { should be_valid}

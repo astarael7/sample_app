@@ -6,7 +6,7 @@
 				<%= gravatar_for @user %>
 				<%= @user.name %>
 			</h1>
-			<div><% if @user.admin? %>Admin<% end %></div>
+			<div><% if @user.role == "admin" %>Admin<% end %></div>
 			<div><%= link_to "New Post", new_user_post_path(current_user) if current_user?(@user) %></div>
 		</section>
 	</aside>
